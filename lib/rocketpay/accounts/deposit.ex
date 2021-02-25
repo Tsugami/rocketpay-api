@@ -1,11 +1,11 @@
-defmodule Rocketpay.Accounts do
+defmodule Rocketpay.Accounts.Deposit do
   alias Ecto.Multi
   alias Rocketpay.{Account, Repo}
 
-  def cal(%{"id"=> id, "values"=> values}) do
+  def call(%{"id"=> id, "value"=> value}) do
     Multi.new()
       |> Multi.run(:account, fn repo, _changes -> get_account(repo, id) end)
-      |> Multi.run(:update_balance, fn repo, %{account: account} -> update_balance(repo, account, values) end)
+      |> Multi.run(:update_balance, fn repo, %{account: account} -> update_balance(repo, account, value) end)
       |> run_transaction
   end
 
